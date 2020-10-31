@@ -2,15 +2,17 @@
     <div class="col-8">
         <p>Welcome of the TODO Application Test@123</p>
     </div>
-  <div class="col-4">
+  <div class="col-4" style="margin-left: 80%">
       <Button (click)="logout()">Logout</Button>
   </div>
 </div>
 
-
 <input placeholder="Enter the todo" id="tasks"/>
 <input type="button" value="Submit" (click)="createTask()">
-<!-- <div *ngFor= "let task of tasks">{{task.tasks}}</div> -->
-<div *ngFor="let data of tasks">
-    <div>{{data.tasks}}</div>
+<div *ngFor="let data of tasks" let i=index>
+    <input type="checkbox"  class="checkbox" (click)="test(data.id)" [(ngModel)]="data.completed" [checked]="data.completed" />
+    <span [ngClass]="{'checked': data.completed}">{{data.tasks}}</span>
 </div>
+<label><input type="checkbox" [checked]="selectedAll" (change)="selectAll($event)"/> Select all</label>
+
+

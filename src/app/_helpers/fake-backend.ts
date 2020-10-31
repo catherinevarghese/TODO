@@ -5,7 +5,7 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { v4 as uuidv4 } from "uuid";
 // array in local storage for registered users
 let users = [{email:'test@123', password:'test123'}]
-let todo =[];
+let todo =[{id:uuidv4(),tasks:'study',completed: false},{id:uuidv4(),tasks:'play',completed:false}];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -47,19 +47,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(todo);
         }
   function createTasks(){
-   const {tasks, id} = body;
+   const {tasks, id,completed} = body;
    body.id = uuidv4();
+   body.completed = false;
    if(todo.find(x => x.tasks === body.tasks)){
        return error("The task is already added")
    }
    todo.push({
     id: body.id,
-    tasks:body.tasks
+    tasks:body.tasks,
+    completed:body.completed
    });
    console.log(todo);
    return ok({
        id: body.id,
-       tasks:body.tasks
+       tasks:body.tasks,
+       completed: body.completed
    });
   }
         // function register() {
