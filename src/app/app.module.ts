@@ -9,10 +9,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
+import {ListPageModule} from  './list-page/list-page.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { fakeBackendProvider } from './_helpers';
     ReactiveFormsModule, 
     HttpClientModule,
     FormsModule, 
+    ListPageModule
   ],
   providers: [
     fakeBackendProvider

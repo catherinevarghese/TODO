@@ -26,4 +26,10 @@ export class TodoListService {
             }));
     }
 
+    getTodoList(){
+        return this.http.get<any>(`http://localhost:4200:/todolist`)
+        .pipe(map(tasks => {
+            return tasks;
+        }));
+    }
 }

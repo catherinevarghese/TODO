@@ -1,5 +1,16 @@
-<h1>List of the TODO</h1>
+<div class="row">
+    <div class="col-8">
+        <p>Welcome of the TODO Application Test@123</p>
+    </div>
+  <div class="col-4">
+      <Button (click)="logout()">Logout</Button>
+  </div>
+</div>
+
 
 <input placeholder="Enter the todo" id="tasks"/>
-<input type="button" value="Get Value" (click)="createTask(tasks)">
-<!-- <button (click)= "createTask(tasks.value)">Submit</button> -->
+<input type="button" value="Submit" (click)="createTask()">
+<!-- <div *ngFor= "let task of tasks">{{task.tasks}}</div> -->
+<div *ngFor="let data of tasks">
+    <div>{{data.tasks}}</div>
+</div>

@@ -27,6 +27,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/todolist') && method === 'POST':
                    return  createTasks();
+                case url.endsWith('/todolist') && method === 'GET':
+                    return  getTasks();
                 // case url.endsWith('/users') && method === 'GET':
                 //     return getUsers();
                 // case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -40,6 +42,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         // route functions
+
+        function getTasks(){
+            return ok(todo);
+        }
   function createTasks(){
    const {tasks, id} = body;
    body.id = uuidv4();

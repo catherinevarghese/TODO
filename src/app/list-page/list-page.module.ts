@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ListPageRoutingModule } from './list-page-routing.module';
 import { ListPageComponent } from './list-page.component';
 // import { AppRoutingModule } from '../app-routing.module';
-
 @NgModule({
   declarations: [ListPageComponent],
   imports: [
