@@ -1,0 +1,36 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.app-root {
+
+    min-height: 100vh;
+    
+    display: block;
+    
+    position: relative;
+    
+    padding-bottom: 56px; // height of the footer
+    
+    }
+    
+footer {
+    
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #0c4d81;
+    color:white;
+    text-align: center;
+    height: 50px;
+    }
+
+header{
+    background: #0c4d81;
+    box-shadow: 0px 4px grey;
+    color:white;
+    text-align: center;
+    height: 50px;
+}

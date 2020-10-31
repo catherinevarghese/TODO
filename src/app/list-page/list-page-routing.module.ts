@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ListPageComponent } from './list-page.component';
 
-const routes: Routes = [{ path: '', component: ListPageComponent }];
+const routes: Routes = [
+  { path: '', component: ListPageComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -1,8 +1,7 @@
-<h1 style="text-align:center">
+<h1 style="text-align:center;padding-top:10%;">
   Login Page
   </h1>
   <div class="login">
-    <h2 class="login-header">Log in</h2>
     <div class="danger" *ngIf="!error">Email or password is incorrect !!!</div>
     <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login(loginForm.value)">
   
