@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-
+import { v4 as uuidv4 } from "uuid";
 // array in local storage for registered users
 let users = [{email:'test@123', password:'test123'}]
+let todo =[];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -24,6 +25,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 //     return register();
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
+                case url.endsWith('/todolist') && method === 'POST':
+                   return  createTasks();
                 // case url.endsWith('/users') && method === 'GET':
                 //     return getUsers();
                 // case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -37,7 +40,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         // route functions
-
+  function createTasks(){
+   const {tasks, id} = body;
+   body.id = uuidv4();
+   if(todo.find(x => x.tasks === body.tasks)){
+       return error("The task is already added")
+   }
+   todo.push({
+    id: body.id,
+    tasks:body.tasks
+   });
+   console.log(todo);
+   return ok({
+       id: body.id,
+       tasks:body.tasks
+   });
+  }
         // function register() {
         //     const user = body
 
