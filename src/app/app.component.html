@@ -1,11 +1,22 @@
 <div class="app-root">
   <header>
-  <h1>TODO Application</h1>
+  <h1  [style.background]="color1" >TODO Application</h1>
   </header >
   <div class="content" >
+    <div class="container">
+      <div class="row" style="padding-top: 2em;">
+        <div class="col-md-6">
+          <label >Select your theme:</label>
+          &nbsp; &nbsp;
+           <input style= "border-radius: 22px;
+           height: 28px;
+           width: 28px"[style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
+        </div>
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </div>
   <footer>
-    <p style="padding-top: 10px;">Copyright @2020</p>
+    <p style="padding-top: 10px;" [style.background]="color1"  >Copyright @2020</p>
   </footer>
 </div>

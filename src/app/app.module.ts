@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { ColorPickerModule } from 'ngx-color-picker';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 import {ListPageModule} from  './list-page/list-page.module';
@@ -23,7 +24,8 @@ import {ListPageModule} from  './list-page/list-page.module';
     ReactiveFormsModule, 
     HttpClientModule,
     FormsModule, 
-    ListPageModule
+    ListPageModule,
+    ColorPickerModule
   ],
   providers: [
     fakeBackendProvider

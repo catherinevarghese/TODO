@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-8">
-                <p class="heading-content">Welcome Test@123</p>
+                <p class="heading-content" >Welcome Test@123</p>
             </div>
           <div class="col-4">
               <Button (click)="logout()" class="logout">Logout</Button>
@@ -10,20 +10,11 @@
         </div>
     </div>
   </div>
+  
   <div class="card heading-card">
       <h5 class="card-header">Enter your Todo list below</h5>
-      <div class="card-body">
-      <input placeholder="Enter the todo" id="tasks" class="todo-input card-title "/>
-      &nbsp;
-      <input type="button" value="Submit" class="submit-button" (click)="createTask()">
-    </div>
-    <ul class="list-group list-group-flush " >
-        <li class="list-group-item" *ngFor="let data of tasks" let i=index>
-            <input type="checkbox"  class="checkbox" (click)="test(data.id)" [(ngModel)]="data.completed" [checked]="data.completed" />
-            &nbsp;
-            <span style="font-size: x-large;text-transform: capitalize;" [ngClass]="{'checked': data.completed}">{{data.tasks}}</span>
-        </li>
-      </ul>
+      <app-add-todo-page></app-add-todo-page>
+      <app-list-todo-page></app-list-todo-page>
   </div>
   <div class="card heading-card">
       <div class="card-body">

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
+
+import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
+  public color1: string = '#0a4885';
   title = 'todo-application';
+  constructor(
+    public vcRef: ViewContainerRef, 
+    private cpService: ColorPickerService
+) { }
+
+ngOnInit() {
+}
+
+public onChangeColor(color: string): Cmyk {
+  const hsva = this.cpService.stringToHsva(color);
+  const rgba = this.cpService.hsvaToRgba(hsva);
+  console.log(color);
+   console.log(rgba);
+
+  return this.cpService.rgbaToCmyk(rgba);
+}
 }

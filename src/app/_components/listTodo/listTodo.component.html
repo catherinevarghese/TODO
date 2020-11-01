@@ -1,0 +1,7 @@
+<ul class="list-group list-group-flush " >
+    <li class="list-group-item" *ngFor="let data of tasks" let i=index>
+        <input type="checkbox"  class="checkbox" (click)="selectOne(data.id)" [(ngModel)]="data.completed" [checked]="data.completed" />
+        &nbsp;
+        <span style="font-size: x-large;text-transform: capitalize;" [ngClass]="{'checked': data.completed}">{{data.tasks}}</span>
+    </li>
+  </ul>
