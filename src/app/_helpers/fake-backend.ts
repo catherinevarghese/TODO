@@ -3,9 +3,9 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { v4 as uuidv4 } from "uuid";
-// array in local storage for registered users
-let users = [{email:'test@123', password:'test123'}]
-let todo =[{id:uuidv4(),tasks:'study',completed: false},{id:uuidv4(),tasks:'play',completed:false}];
+import {data} from './users';
+import{Todolist} from './todo';
+
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -15,24 +15,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
-            .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
+            .pipe(materialize()) 
             .pipe(delay(500))
             .pipe(dematerialize());
 
         function handleRoute() {
             switch (true) {
-                // case url.endsWith('/users/register') && method === 'POST':
-                //     return register();
+                case url.endsWith('/users/register') && method === 'POST':
+                    return register();
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
                 case url.endsWith('/todolist') && method === 'POST':
                    return  createTasks();
                 case url.endsWith('/todolist') && method === 'GET':
                     return  getTasks();
-                // case url.endsWith('/users') && method === 'GET':
-                //     return getUsers();
-                // case url.match(/\/users\/\d+$/) && method === 'GET':
-                //     return getUserById();
                 // case url.match(/\/users\/\d+$/) && method === 'DELETE':
                 //     return deleteUser();
                 default:
@@ -44,52 +40,46 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function getTasks(){
-            return ok(todo);
+            return ok(Todolist.todo);
         }
-  function createTasks(){
-   const {tasks, id,completed} = body;
-   body.id = uuidv4();
-   body.completed = false;
-   if(todo.find(x => x.tasks === body.tasks)){
-       return error("The task is already added")
-   }
-   todo.push({
-    id: body.id,
-    tasks:body.tasks,
-    completed:body.completed
-   });
-   console.log(todo);
-   return ok({
-       id: body.id,
-       tasks:body.tasks,
-       completed: body.completed
-   });
-  }
-        // function register() {
-        //     const user = body
 
-        //     if (users.find(x => x.username === user.username)) {
-        //         return error('Username "' + user.username + '" is already taken')
-        //     }
-
-        //     user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
-        //     users.push(user);
-        //     localStorage.setItem('users', JSON.stringify(users));
-
-        //     return ok();
-        // }
+        function createTasks(){
+        const {tasks, id,completed} = body;
+        body.id = uuidv4();
+        body.completed = false;
+        if(Todolist.todo.find(x => x.tasks === body.tasks)){
+            return error("The task is already added")
+        }
+        Todolist.todo.push({
+            id: body.id,
+            tasks:body.tasks,
+            completed:body.completed
+        });
+        console.log(Todolist.todo);
+        return ok({
+            id: body.id,
+            tasks:body.tasks,
+            completed: body.completed
+        });
+        }
+        function register() {
+            const user = body
+            if (data.users.find(x => x.email === user.email)) {
+                return error('Username "' + user.username + '" is already taken')
+            }
+            user.id = uuidv4();
+            data.users.push(user);
+            localStorage.setItem('users', JSON.stringify(data.users));
+            return ok();
+        }
 
         function authenticate() {
             const { email, password } = body;
-            const user = users.find(x => x.email === email && x.password === password);
+            const user = data.users.find(x => x.email === email && x.password === password);
             if (!user) return error('Username or password is incorrect');
             return ok({
-                // id: user.id,
                 username: user.email,
                 password: user.password
-                // firstName: user.firstName,
-                // lastName: user.lastName,
-                // token: 'fake-jwt-token'
             })
         }
 
@@ -118,22 +108,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function ok(body?) {
             return of(new HttpResponse({ status: 200, body }))
         }
-
-        function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Unauthorised' } });
-        }
-
         function error(message) {
             return throwError({ error: { message } });
-        }
-
-        function isLoggedIn() {
-            return headers.get('Authorization') === 'Bearer fake-jwt-token';
-        }
-
-        function idFromUrl() {
-            const urlParts = url.split('/');
-            return parseInt(urlParts[urlParts.length - 1]);
         }
     }
 }

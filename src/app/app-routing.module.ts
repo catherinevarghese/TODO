@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { 
-  path: 'home', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) 
-},
-  { path: 'list_page', loadChildren: () => import('./list-page/list-page.module').then(m => m.ListPageModule) },
-{ path: '**', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)  },
+  { path: 'login-page', loadChildren: () => import('./_pages/login-page/login-page.module').then(m => m.LoginPageModule) },
+//   { 
+//   path: 'home', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) 
+// },
+{ path: 'list_page', loadChildren: () => import('./_pages/todo-list-page/todo-list-page.module').then(m => m.ListPageModule) },
+  { path: 'register', loadChildren: () => import('./_pages/register/register.module').then(m => m.RegisterModule) },
+ 
+{ path: '**', loadChildren: () => import('./_pages/login-page/login-page.module').then(m => m.LoginPageModule)  },
 ];
 
 @NgModule({

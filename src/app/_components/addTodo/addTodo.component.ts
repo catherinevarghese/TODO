@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {TodoListService} from '../../_services/todoList.service';
-import { AuthenticationService} from  '../../_services/authentication.service'
+import { AuthenticationService} from  '../../_services/authentication.service';
+import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 @Component({
   selector: 'app-add-todo-page',
   templateUrl: './addTodo.component.html',
@@ -11,17 +12,23 @@ export class AddTodoComponent implements OnInit {
   tasks: any;
   complete: false;
   selectedAll: boolean;
+  loginForm: FormGroup;
   constructor(
     private tasksListService: TodoListService,
+    private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit(): void {
-    
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      tasks: ['', Validators.required],
+  });
   }
-  createTask(){
-    var details = (<HTMLInputElement>document.getElementById("tasks")).value;
-    console.log(details);
-    this.tasksListService.createTodoList(details).subscribe((res)=>{
+  get formControls() { return this.loginForm.controls; }
+ 
+  createTask(value){
+    // var details = (<HTMLInputElement>document.getElementById("tasks")).value;
+    console.log(value);
+    this.tasksListService.createTodoList(value.tasks).subscribe((res)=>{
       console.log(res);
       this.tasksListService.getTodoList().subscribe((res)=>{
         console.log(res);

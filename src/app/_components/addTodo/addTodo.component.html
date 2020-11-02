@@ -1,5 +1,7 @@
 <div class="card-body">
-    <input placeholder="Enter the todo" id="tasks" class="todo-input card-title "/>
-    &nbsp;
-    <input type="button" value="Submit" class="submit-button" (click)="createTask()">
+  <form  [formGroup]="loginForm">
+    <input placeholder="Enter the todo" id="tasks" class="todo-input card-title " formControlName="tasks"/>
+    <input type="button" value="Submit" class="submit-button" (click)="createTask(loginForm.value)">
+  </form>
+    
   </div>

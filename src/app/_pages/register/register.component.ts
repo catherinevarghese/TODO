@@ -3,14 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { first } from 'rxjs/operators';
-import {AuthenticationService} from '../../../_services/authentication.service';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
-  selector: 'app-registration-form',
-  templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted  =  false;
   error = true;
@@ -19,7 +19,7 @@ export class RegistrationFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -29,15 +29,11 @@ export class RegistrationFormComponent implements OnInit {
   }
   get formControls() { return this.loginForm.controls; }
   login(value){
-    console.log("reached "+ value.email);
-    this.authenticationService.login(value.email,value.password).subscribe((user) => {
-      console.log(user);
-      this.router.navigate(['/list_page']);
+    this.authenticationService.register(value.email,value.password).subscribe((user) => {
+      this.router.navigate(['/login-page']);
     },err =>{
       this.error = false;
-      console.log(this.error);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login-page']);
     })
   }
-
 }

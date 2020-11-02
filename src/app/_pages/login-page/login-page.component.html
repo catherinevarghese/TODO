@@ -1,0 +1,23 @@
+<h1 style="text-align:center;padding-top:10%;">
+    Login Page
+    </h1>
+    <div class="login">
+      <div class="danger" *ngIf="!error">
+        Email or password is incorrect !!!
+      </div>
+      <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login(loginForm.value)">
+        <p>
+          <input type="email" placeholder="Email" formControlName="email">
+        </p>
+        <p>
+          <input type="password" placeholder="Password" formControlName="password">
+        </p>
+        <p>
+          <input type="submit" value="Log in">
+        </p>
+        <div class="register">
+          <a routerLink="/register" class="btn btn-link">Register</a>
+        </div>
+      </form>
+    </div>
+    
