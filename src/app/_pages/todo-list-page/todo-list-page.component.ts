@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {TodoListService} from '../../_services/todoList.service';
 import { AuthenticationService} from  '../../_services/authentication.service';
-
+import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-list-page',
   templateUrl: './todo-list-page.component.html',
@@ -17,29 +17,12 @@ export class ListPageComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-
+    private translate: TranslateService
   ) { }
 
-  ngOnInit() {
-    this.tasksListService.getTodoList().subscribe((res)=>{
-      this.tasks = res;
-    })
+  ngOnInit():void {
   }
-  
-  selectAll(e){
-  if(e.target.checked){
-     this.selectedAll = true;
-     for(var i=0;i< this.tasks.length; i++){
-      this.tasks[i].completed = this.selectedAll;
-    }
-  }
-  else{
-     this.selectedAll = false;
-     for(var i=0;i< this.tasks.length; i++){
-      this.tasks[i].completed = this.selectedAll;
-    }
-  }
- }
+
 
   logout(){
     this.authenticationService.logout();

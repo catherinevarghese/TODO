@@ -2,26 +2,21 @@
     <div class="card-body">
         <div class="row">
             <div class="col-8">
-                <p class="heading-content" >Welcome to Todo Application</p>
+                <p class="heading-content" >{{'TODO_LIST.TITLE' | translate}}</p>
             </div>
           <div class="col-4">
-              <Button (click)="logout()" class="logout">Logout</Button>
+              <Button (click)="logout()" class="logout">{{'TODO_LIST.LOGOUT' | translate}}</Button>
           </div>
         </div>
     </div>
   </div>
   
   <div class="card heading-card">
-      <h5 class="card-header" >Enter your Todo list below</h5>
+      <h5 class="card-header">{{'TODO_LIST.LIST_TITLE' | translate}}</h5>
       <app-add-todo-page></app-add-todo-page>
-      <app-list-todo-page></app-list-todo-page>
+      <app-list-todo-page [res]="tasks"></app-list-todo-page>
   </div>
-  <div class="card heading-card">
-      <div class="card-body">
-        <label><input class="selectAll" type="checkbox" [checked]="selectedAll" (change)="selectAll($event)"/>  &nbsp; Select all</label>
-        <span style="float: right;"><Button class="delete-button">Delete</Button></span>
-      </div>
-  </div>
+ 
 
 
 

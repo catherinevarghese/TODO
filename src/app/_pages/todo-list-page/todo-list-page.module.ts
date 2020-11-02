@@ -8,6 +8,8 @@ import {AddTodoComponent} from '../../_components/addTodo/addTodo.component';
 import{ListTodoComponent} from '../../_components/listTodo/listTodo.component';
 // import { AppRoutingModule } from '../app-routing.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule, HTTP_INTERCEPTORS,HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 @NgModule({
   declarations: [ListPageComponent,AddTodoComponent,ListTodoComponent],
   imports: [
@@ -16,6 +18,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     ReactiveFormsModule, 
     FormsModule, 
+    TranslateModule.forChild({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    }),
   ]
 })
 export class ListPageModule { }
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}

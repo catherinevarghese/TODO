@@ -29,8 +29,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                    return  createTasks();
                 case url.endsWith('/todolist') && method === 'GET':
                     return  getTasks();
-                // case url.match(/\/users\/\d+$/) && method === 'DELETE':
-                //     return deleteUser();
+                case url.match('todolist') && method === 'DELETE':
+                    return deleteUser();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -40,22 +40,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function getTasks(){
-            return ok(Todolist.todo);
+            return ok(Todolist.TODO);
         }
 
         function createTasks(){
         const {tasks, id,completed} = body;
         body.id = uuidv4();
         body.completed = false;
-        if(Todolist.todo.find(x => x.tasks === body.tasks)){
+        if(Todolist.TODO.find(x => x.tasks === body.tasks)){
             return error("The task is already added")
         }
-        Todolist.todo.push({
+        Todolist.TODO.push({
             id: body.id,
             tasks:body.tasks,
             completed:body.completed
         });
-        console.log(Todolist.todo);
+        console.log(Todolist.TODO);
         return ok({
             id: body.id,
             tasks:body.tasks,
@@ -64,18 +64,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function register() {
             const user = body
-            if (data.users.find(x => x.email === user.email)) {
+            if (data.USERS.find(x => x.email === user.email)) {
                 return error('Username "' + user.username + '" is already taken')
             }
             user.id = uuidv4();
-            data.users.push(user);
-            localStorage.setItem('users', JSON.stringify(data.users));
+            data.USERS.push(user);
+            localStorage.setItem('users', JSON.stringify(data.USERS));
             return ok();
         }
 
         function authenticate() {
             const { email, password } = body;
-            const user = data.users.find(x => x.email === email && x.password === password);
+            const user = data.USERS.find(x => x.email === email && x.password === password);
             if (!user) return error('Username or password is incorrect');
             return ok({
                 username: user.email,
@@ -83,27 +83,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             })
         }
 
-        // function getUsers() {
-        // //     if (!isLoggedIn()) return unauthorized();
-        // //     return ok(users);
-        // // }
-
-        // // function getUserById() {
-        // //     if (!isLoggedIn()) return unauthorized();
-
-        // //     const user = users.find(x => x.id == idFromUrl());
-        // //     return ok(user);
-        // // }
-
-        // function deleteUser() {
-        //     if (!isLoggedIn()) return unauthorized();
-
-        //     users = users.filter(x => x.id !== idFromUrl());
-        //     localStorage.setItem('users', JSON.stringify(users));
-        //     return ok();
-        // }
-
-        // helper functions
+        function deleteUser() {
+            Todolist.TODO =[];
+            return ok(Todolist.TODO);
+        }
 
         function ok(body?) {
             return of(new HttpResponse({ status: 200, body }))

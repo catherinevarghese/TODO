@@ -13,6 +13,7 @@ export class AddTodoComponent implements OnInit {
   complete: false;
   selectedAll: boolean;
   loginForm: FormGroup;
+  
   constructor(
     private tasksListService: TodoListService,
     private formBuilder: FormBuilder,
@@ -26,15 +27,12 @@ export class AddTodoComponent implements OnInit {
   get formControls() { return this.loginForm.controls; }
  
   createTask(value){
-    // var details = (<HTMLInputElement>document.getElementById("tasks")).value;
-    console.log(value);
     this.tasksListService.createTodoList(value.tasks).subscribe((res)=>{
-      console.log(res);
       this.tasksListService.getTodoList().subscribe((res)=>{
-        console.log(res);
         this.tasks = res;
-        console.log(this.tasks);
       })
     } )
   }
+    
+
 }

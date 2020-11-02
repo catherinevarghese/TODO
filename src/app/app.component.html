@@ -4,18 +4,31 @@
   </header >
   <div class="content" >
     <div class="container">
-      <div class="row theme" >
-        <div class="col-md-6">
-          <label >{{'APP.THEME' | translate}}</label>
+      <div class="theme" >
+        <div >
+          <!-- <label >{{'APP.THEME' | translate}}</label>
           &nbsp; &nbsp;
-           <input class="color-picker" [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
-           <label>{{'APP.LANGUAGE' | translate}}</label>
-           <span>
-            <Button (click)="toggleLang('en')">English</Button>
-           </span>
-           <span>
-            <button (click)="toggleLang('hi')">Hindi</button>
-           </span>
+           <input class="color-picker" [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/> -->
+           <div class="row">
+            <label>{{'APP.LANGUAGE' | translate}}</label>
+            <span>
+             <Button class="english"  (click)="toggleLang('en')">English</Button>
+            </span>
+            <span>
+             <button  class="english" (click)="toggleLang('hi')">Hindi</button>
+            </span>
+           </div>
+       <div class="theme-col row">
+        <label>{{'APP.THEME' | translate}}</label>
+        <span>
+          <Button class="english" (click)="themeSelection('dark')">Dark Theme</Button>
+         </span>
+         <span>
+          <button class="english"   (click)="themeSelection('light')">Light Theme</button>
+         </span>
+       </div>
+           <!-- <label for="darkTheme">Dark Theme</label>
+          <input id="darkTheme" type="checkbox" [formControl]="darkTheme"> -->
         </div>
       </div>
     </div>

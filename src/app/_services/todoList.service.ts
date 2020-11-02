@@ -15,7 +15,12 @@ export class TodoListService {
                 return task;
             }));
     }
-
+  deleteAllTodoList(){
+    return this.http.delete<any>(`${environment.BASEURL}/todolist`, { })
+    .pipe(map(task => {
+        return task;
+    }));
+  }
     getTodoList(){
         return this.http.get<any>(`${environment.BASEURL}/todolist`)
         .pipe(map(tasks => {
