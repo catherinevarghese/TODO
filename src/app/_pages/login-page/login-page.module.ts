@@ -15,7 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     LoginPageRoutingModule,
     ReactiveFormsModule, 
     FormsModule, 
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
