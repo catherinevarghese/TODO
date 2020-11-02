@@ -10,7 +10,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
     login(email: string, password: string) {
         console.log(email)
-        return this.http.post<any>(`${environment.baseUrl}/users/authenticate`, { email, password })
+        return this.http.post<any>(`${environment.BASEURL}/users/authenticate`, { email, password })
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 return user;
@@ -21,7 +21,7 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
     }
     register(email: string, password: string){
-        return this.http.post<any>(`${environment.baseUrl}/users/register`, { email, password })
+        return this.http.post<any>(`${environment.BASEURL}/users/register`, { email, password })
         .pipe(map(user => {
             localStorage.setItem('currentUser', JSON.stringify(user));
             return user;

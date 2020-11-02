@@ -10,14 +10,14 @@ export class TodoListService {
     constructor(private http: HttpClient) {
     }
     createTodoList(tasks: string) {
-        return this.http.post<any>(`${environment.baseUrl}/todolist`, { tasks })
+        return this.http.post<any>(`${environment.BASEURL}/todolist`, { tasks })
             .pipe(map(task => {
                 return task;
             }));
     }
 
     getTodoList(){
-        return this.http.get<any>(`${environment.baseUrl}/todolist`)
+        return this.http.get<any>(`${environment.BASEURL}/todolist`)
         .pipe(map(tasks => {
             return tasks;
         }));

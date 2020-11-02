@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {AuthenticationService} from '../../_services/authentication.service';
-
+import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -19,7 +19,9 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-  ) { }
+    private translate: TranslateService
+  ) { 
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

@@ -19,12 +19,21 @@ export class AppComponent {
     private cpService: ColorPickerService,
     private translate: TranslateService
 ) { 
-  translate.setDefaultLang('hi');
+  translate.setDefaultLang('en');
 }
 
 ngOnInit() {
 }
+toggleLang(lang){
+  console.log(lang);
+    this.translate.use(lang);
 
+  // this.translate.setDefaultLang(lang);
+}
+ getComboA(selectObject) {
+  var value = selectObject.value;  
+  console.log(value);
+}
 public onChangeColor(color: string): Cmyk {
   const hsva = this.cpService.stringToHsva(color);
   const rgba = this.cpService.hsvaToRgba(hsva);

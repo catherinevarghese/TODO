@@ -6,15 +6,22 @@
     <div class="container">
       <div class="row theme" >
         <div class="col-md-6">
-          <label >Select your theme:</label>
+          <label >{{'APP.THEME' | translate}}</label>
           &nbsp; &nbsp;
            <input class="color-picker" [style.background]="color1" [(colorPicker)]="color1" (colorPickerChange)="onChangeColor($event)"/>
+           <label>{{'APP.LANGUAGE' | translate}}</label>
+           <span>
+            <Button (click)="toggleLang('en')">English</Button>
+           </span>
+           <span>
+            <button (click)="toggleLang('hi')">Hindi</button>
+           </span>
         </div>
       </div>
     </div>
     <router-outlet></router-outlet>
   </div>
   <footer>
-    <p class="footer-copyright" [style.background]="color1"  >Copyright @2020</p>
+    <p class="footer-copyright" [style.background]="color1"  >{{'APP.FOOTER'| translate}}</p>
   </footer>
 </div>
