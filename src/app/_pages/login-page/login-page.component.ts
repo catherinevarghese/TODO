@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import {AuthenticationService} from '../../_services/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
+import {User} from  '../../_models/User';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -16,12 +14,9 @@ export class LoginPageComponent implements OnInit {
   error = true;
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private translate: TranslateService
-  ) { 
-  }
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -30,14 +25,14 @@ export class LoginPageComponent implements OnInit {
   });
   }
   get formControls() { return this.loginForm.controls; }
-  login(value){
-    this.authenticationService.login(value.email,value.password).subscribe((user) => {
-      console.log(user);
+
+  login(formValues){
+    this.authenticationService.login(formValues.email, formValues.password).subscribe((user: User) => {
       this.router.navigate(['/list_page']);
-    },err =>{
+    }, err => {
       this.error = false;
       this.router.navigate(['/login-page']);
-    })
+    });
   }
 
 }

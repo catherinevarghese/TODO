@@ -9,15 +9,13 @@ import { User } from '../_models';
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
     login(email: string, password: string) {
-        console.log(email)
         return this.http.post<any>(`${environment.BASEURL}/users/authenticate`, { email, password })
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 return user;
             }));
     }
-
-    logout() {
+    logout(): void {
         localStorage.removeItem('currentUser');
     }
     register(email: string, password: string){

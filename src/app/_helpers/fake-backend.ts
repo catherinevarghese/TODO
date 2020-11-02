@@ -3,19 +3,20 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { v4 as uuidv4 } from "uuid";
-import {data} from './users';
-import{Todolist} from './todo';
-
+import {Details} from './users';
+import {TodoList} from './todo';
+import {Todo } from '../_models/Todo';
+import {User} from '../_models/User';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const { url, method, headers, body } = request;
+        const { url, method, body } = request;
 
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
-            .pipe(materialize()) 
+            .pipe(materialize())
             .pipe(delay(500))
             .pipe(dematerialize());
 
@@ -34,64 +35,67 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
-            }    
+            }
         }
 
         // route functions
 
         function getTasks(){
-            return ok(Todolist.TODO);
+            // TodoList.TODO = JSON.parse(localStorage.getItem('todoList'));
+            return ok(TodoList.TODO);
         }
 
         function createTasks(){
-        const {tasks, id,completed} = body;
+        const todo: Todo = body;
         body.id = uuidv4();
         body.completed = false;
-        if(Todolist.TODO.find(x => x.tasks === body.tasks)){
-            return error("The task is already added")
+        if (TodoList.TODO.find((x: Todo) => x.name === body.name)){
+            return error('The task is already added');
         }
-        Todolist.TODO.push({
+        TodoList.TODO.push({
             id: body.id,
-            tasks:body.tasks,
-            completed:body.completed
-        });
-        console.log(Todolist.TODO);
-        return ok({
-            id: body.id,
-            tasks:body.tasks,
+            name: body.name,
             completed: body.completed
         });
+        console.log(TodoList.TODO);
+        localStorage.setItem('todoList', JSON.stringify(TodoList.TODO));
+        return ok(TodoList.TODO);
         }
         function register() {
-            const user = body
-            if (data.USERS.find(x => x.email === user.email)) {
-                return error('Username "' + user.username + '" is already taken')
+            const user = body;
+            if (Details.USERS.find((x: User) => x.email === user.email)) {
+                return error('Username "' + user.email + '" is already taken');
             }
             user.id = uuidv4();
-            data.USERS.push(user);
-            localStorage.setItem('users', JSON.stringify(data.USERS));
-            return ok();
+            Details.USERS.push(user);
+            console.log(user);
+            return ok(Details.USERS);
         }
 
         function authenticate() {
-            const { email, password } = body;
-            const user = data.USERS.find(x => x.email === email && x.password === password);
-            if (!user) return error('Username or password is incorrect');
-            return ok({
-                username: user.email,
-                password: user.password
-            })
-        }
+          const { email, password } = body;
+          const users = JSON.parse( localStorage.getItem('users'));
+          console.log(users);
+          if ( !users){
+            const user = Details.USERS.find((x: User) => x.email === email && x.password === password);
+            if (!user) {
+                return error('Username or password is incorrect');
+              }
+          } else {
+            const user = users.find((x: User) => x.email === email && x.password === password);
+          }
+          return ok(Details.USERS);
+                }
 
         function deleteUser() {
-            Todolist.TODO =[];
-            return ok(Todolist.TODO);
+            TodoList.TODO = [];
+            return ok(TodoList.TODO);
         }
 
-        function ok(body?) {
-            return of(new HttpResponse({ status: 200, body }))
+        function ok(body){
+            return of(new HttpResponse({ status: 200, body }));
         }
-        function error(message) {
+        function error(message: string) {
             return throwError({ error: { message } });
         }
     }

@@ -9,8 +9,9 @@ import { User } from '../_models';
 export class TodoListService {
     constructor(private http: HttpClient) {
     }
-    createTodoList(tasks: string) {
-        return this.http.post<any>(`${environment.BASEURL}/todolist`, { tasks })
+    createTodoList(name: string) {
+        console.log(name)
+        return this.http.post<any>(`${environment.BASEURL}/todolist`, { name })
             .pipe(map(task => {
                 return task;
             }));
@@ -23,8 +24,8 @@ export class TodoListService {
   }
     getTodoList(){
         return this.http.get<any>(`${environment.BASEURL}/todolist`)
-        .pipe(map(tasks => {
-            return tasks;
+        .pipe(map(x => {
+            return x;
         }));
     }
 }

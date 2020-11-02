@@ -1,4 +1,9 @@
 
-export const data = {
-    USERS : [{email:'test@123', password:'test123'}]
+export const Details = {
+    USERS : [
+      {
+        email: 'test@123',
+        password: 'test123'
+      }
+    ]
   };

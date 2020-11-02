@@ -1,52 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import {TodoListService} from '../../_services/todoList.service';
+import {Todo} from '../../_models/Todo';
 @Component({
   selector: 'app-list-todo-page',
   templateUrl: './listTodo.component.html',
   styleUrls: ['./listTodo.component.scss']
 })
 export class ListTodoComponent implements OnInit {
-  tasks: any;
-  complete: false;
+  todos: any;
   selectedAll: boolean;
-  buttonDisabled: boolean;
+  isButtonHidden: boolean;
+  isTasksCompleted: boolean;
   constructor(
     private tasksListService: TodoListService,
   ) { }
 
   ngOnInit() {
-    this.tasksListService.getTodoList().subscribe((res)=>{
-      this.tasks = res;
-    })
-    this.buttonDisabled = true;
+    this.getAllTodos();
+    this.isButtonHidden = true;
+  }
+getAllTodos(){
+  this.tasksListService.getTodoList().subscribe((todoList: [Todo]) => {
+    this.todos = todoList;
+    return this.todos;
+  });
+}
+
+completedTask(completed){
+  for( var i = 0 ; i < this.todos.length; i++){
+    this.todos[i].completed = completed;
+  }
+}
+  markTodo(id){
+  const index = this.todos.findIndex(x => x.id === id);
+  this.todos[index].completed = !this.todos[index].completed;
   }
 
-  selectOne(data){
-  const value =this.tasks.findIndex(x => x.id === data)
-  this.tasks[value].completed = !this.tasks[value].completed
-  }
-
-  selectAll(e){
-    this.buttonDisabled = !this.buttonDisabled;
-    if(e.target.checked){
+  markAllTodos(e){
+    this.isButtonHidden = !this.isButtonHidden;
+    if (e.target.checked){
        this.selectedAll = true;
-       for(var i=0;i< this.tasks.length; i++){
-        this.tasks[i].completed = this.selectedAll;
-      }
+       this.completedTask(this.selectedAll);
     }
     else{
        this.selectedAll = false;
-       for(var i=0;i< this.tasks.length; i++){
-        this.tasks[i].completed = this.selectedAll;
-      }
+       this.completedTask(this.selectedAll);
     }
    }
 
    deleteAll(){
      this.tasksListService.deleteAllTodoList().subscribe((res) => {
-      this.tasksListService.getTodoList().subscribe((data)=>{
-        this.tasks = data;
-      })
-     }) 
+      this.getAllTodos();
+      this.isTasksCompleted = false;
+     }) ;
      }
 }
