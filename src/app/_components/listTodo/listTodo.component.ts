@@ -31,8 +31,7 @@ completedTask(completed){
     this.todos[i].completed = completed;
   }
 }
-  markTodo(id){
-  const index = this.todos.findIndex(x => x.id === id);
+  markTodo(index){
   this.todos[index].completed = !this.todos[index].completed;
   }
 
