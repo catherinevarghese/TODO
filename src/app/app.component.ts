@@ -2,6 +2,9 @@ import { Component, ViewContainerRef } from '@angular/core';
 
 import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
+import {TranslateService} from '@ngx-translate/core';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,8 +16,11 @@ export class AppComponent {
   title = 'todo-application';
   constructor(
     public vcRef: ViewContainerRef, 
-    private cpService: ColorPickerService
-) { }
+    private cpService: ColorPickerService,
+    private translate: TranslateService
+) { 
+  translate.setDefaultLang('hi');
+}
 
 ngOnInit() {
 }
