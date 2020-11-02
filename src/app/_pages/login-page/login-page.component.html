@@ -7,16 +7,16 @@
       </div>
       <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login(loginForm.value)">
         <p>
-          <input type="email" placeholder="Email" formControlName="email">
+          <input type="email" placeholder="{{'LOGIN.EMAIL' | translate}}" formControlName="email">
         </p>
         <p>
-          <input type="password" placeholder="Password" formControlName="password">
+          <input type="password" placeholder="{{'LOGIN.PASSWORD' | translate}}" formControlName="password">
         </p>
         <p>
-          <input type="submit" value="Log in">
+          <input type="submit" value="{{'LOGIN.LOGIN_BUTTON' | translate}}">
         </p>
         <div class="register">
-          <a routerLink="/register" class="btn btn-link">Register</a>
+          <a routerLink="/register" class="btn btn-link">{{'LOGIN.REGISTER' | translate}}</a>
         </div>
       </form>
     </div>

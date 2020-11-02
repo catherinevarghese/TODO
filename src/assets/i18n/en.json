@@ -6,7 +6,11 @@
         "THEME": "Select the theme:"
     },
     "LOGIN":{
-        "TITLE":"Login Page"
+        "TITLE":"Login Page",
+        "EMAIL":"Email",
+        "PASSWORD":"Password",
+        "LOGIN_BUTTON":"Log in",
+        "REGISTER":"Register"
     },
     "TODO_LIST":{
         "TITLE":"Welcome to Todo Application",

@@ -6,7 +6,11 @@
         "THEME":"अपने विषय का चयन करें :"
     },
     "LOGIN":{
-        "TITLE":" Login पृष्ठ"
+        "TITLE":" Login पृष्ठ",
+        "EMAIL":"ईमेल",
+        "PASSWORD":"पासवर्ड",
+        "LOGIN_BUTTON":"लॉग इन",
+        "REGISTER":"रजिस्टर"
     },
     "TODO_LIST":{
         "TITLE":"Todo आवेदन में स्वागत",
